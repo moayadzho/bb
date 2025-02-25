@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* خلفية عصرية */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* تأثير دخول ناعم */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            background: #ffffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            animation: slideDown 1s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        table {
+            width: 80%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #0277bd;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+            transition: background 0.3s ease;
+        }
+
+        /* زر إلغاء الموعد */
+        button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* زر تسجيل الخروج */
+        .logout-btn {
+            background: #34495e;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome, Dr. <span th:text="${email}"></span>!</h1>
+
+<h2>Your Appointments:</h2>
+<table>
+    <tr>
+        <th>Appointment ID</th>
+        <th>Patient Email</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.appId}"></td>
+        <td th:text="${appointment.email}"></td>
+        <td th:text="${appointment.status}"></td>
+        <td>
+            <form action="/cancelAppointment" method="post">
+                <input type="hidden" name="appId" th:value="${appointment.appId}">
+                <button type="submit"><i class="fas fa-times"></i> Cancel</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<a href="/doclog"><button class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button></a>
+</body>
+</html>
